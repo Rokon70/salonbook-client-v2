@@ -4,21 +4,38 @@
 
 @layer base {
   html { scroll-behavior: smooth; }
-  body { @apply bg-paper text-ink antialiased; }
+  body { @apply bg-cream text-ink antialiased; }
   h1, h2, h3 { @apply font-display tracking-tight; }
+  ::selection { @apply bg-berry-200 text-berry-900; }
   :focus-visible { @apply outline-2 outline-offset-2 outline-berry-500; }
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { @apply bg-cream; }
+  ::-webkit-scrollbar-thumb { @apply rounded-full bg-berry-200; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-berry-300; }
 }
 
 @layer components {
-  .btn { @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60; }
-  .btn-primary { @apply btn bg-berry-600 text-white hover:bg-berry-700; }
-  .btn-outline { @apply btn border border-berry-200 bg-white text-berry-700 hover:bg-berry-50; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-60 active:scale-[0.98]; }
+  .btn-primary { @apply btn bg-gradient-to-r from-berry-600 to-berry-500 text-white shadow-soft hover:-translate-y-0.5 hover:from-berry-700 hover:to-berry-600 hover:shadow-lift; }
+  .btn-outline { @apply btn border border-berry-200 bg-white text-berry-700 hover:-translate-y-0.5 hover:border-berry-300 hover:bg-berry-50 hover:shadow-soft; }
+  .btn-ghost { @apply btn text-ink-soft hover:bg-berry-50 hover:text-berry-700; }
   .btn-danger { @apply btn bg-red-600 text-white hover:bg-red-700; }
-  .btn-sm { @apply px-3 py-1.5 text-xs; }
-  .input { @apply w-full rounded-lg border border-berry-200 bg-white px-3 py-2.5 text-sm text-ink placeholder:text-ink-faint focus:border-berry-500 focus:outline-none focus:ring-2 focus:ring-berry-100; }
+  .btn-sm { @apply rounded-lg px-3 py-1.5 text-xs; }
+  .input { @apply w-full rounded-xl border border-berry-100 bg-white px-4 py-3 text-sm text-ink shadow-sm placeholder:text-ink-faint focus:border-berry-400 focus:outline-none focus:ring-4 focus:ring-berry-100; }
   .label { @apply mb-1.5 block text-sm font-medium text-ink-soft; }
-  .card { @apply rounded-xl border border-berry-100 bg-white; }
-  .container-page { @apply mx-auto w-full max-w-6xl px-4 sm:px-6; }
-  .th { @apply whitespace-nowrap px-4 py-3 text-left text-xs font-semibold text-ink-soft; }
+  .card { @apply rounded-2xl border border-berry-100 bg-white shadow-soft; }
+  .card-hover { @apply card transition-all duration-300 hover:-translate-y-1.5 hover:border-berry-200 hover:shadow-lift; }
+  .container-page { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+  .eyebrow { @apply inline-flex items-center gap-2 rounded-full border border-berry-100 bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-berry-600 shadow-sm; }
+  .section-title { @apply text-3xl font-semibold leading-tight sm:text-4xl; }
+  .glass { @apply border border-white/60 bg-white/80 backdrop-blur-xl; }
+  .divider-soft { @apply h-px w-full bg-gradient-to-r from-transparent via-berry-200 to-transparent; }
+  .skeleton { @apply relative overflow-hidden rounded-xl bg-berry-50; }
+  .skeleton::after { content: ""; @apply absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/60 to-transparent; }
+  .th { @apply whitespace-nowrap px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-ink-faint; }
   .td { @apply px-4 py-3 text-sm align-middle; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }

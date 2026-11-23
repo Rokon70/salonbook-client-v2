@@ -9,29 +9,32 @@ export function Spinner({ className = "h-5 w-5" }) {
 export function PageLoader({ label = "Loading…" }) {
   return (
     <div className="flex min-h-[40vh] flex-col items-center justify-center gap-3 text-ink-soft" role="status">
-      <Spinner className="h-8 w-8 text-berry-600" />
-      <p className="text-sm">{label}</p>
+      <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-berry-50">
+        <Spinner className="h-6 w-6 text-berry-600" />
+        <span className="absolute inset-0 animate-ping rounded-2xl bg-berry-100/60" />
+      </div>
+      <p className="text-sm font-medium">{label}</p>
     </div>
   );
 }
 
 export function ErrorBox({ message, onRetry }) {
   return (
-    <div className="mx-auto my-10 max-w-md rounded-xl border border-red-200 bg-red-50 p-6 text-center">
-      <AlertCircle className="mx-auto mb-2 h-8 w-8 text-red-500" />
-      <p className="text-sm text-red-700">{message}</p>
-      {onRetry && <button onClick={onRetry} className="btn-outline btn-sm mt-4">Try again</button>}
+    <div className="mx-auto my-10 max-w-md rounded-2xl border border-red-100 bg-red-50/70 p-8 text-center shadow-soft">
+      <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-red-100 text-red-600"><AlertCircle className="h-6 w-6" /></span>
+      <p className="mt-3 text-sm font-medium text-red-800">{message}</p>
+      {onRetry && <button onClick={onRetry} className="btn-outline btn-sm mt-5">Try again</button>}
     </div>
   );
 }
 
 export function EmptyState({ title, text, action }) {
   return (
-    <div className="flex flex-col items-center rounded-xl border border-dashed border-berry-200 bg-white px-6 py-14 text-center">
-      <Inbox className="mb-3 h-9 w-9 text-berry-300" />
-      <h3 className="text-lg font-semibold">{title}</h3>
-      {text && <p className="mt-1 max-w-sm text-sm text-ink-soft">{text}</p>}
-      {action && <div className="mt-4">{action}</div>}
+    <div className="flex flex-col items-center rounded-3xl border border-dashed border-berry-200 bg-white/70 px-6 py-16 text-center">
+      <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-berry-50 text-berry-400"><Inbox className="h-7 w-7" /></span>
+      <h3 className="mt-4 text-xl font-semibold">{title}</h3>
+      {text && <p className="mt-2 max-w-sm text-sm leading-relaxed text-ink-soft">{text}</p>}
+      {action && <div className="mt-6">{action}</div>}
     </div>
   );
 }
@@ -57,13 +60,29 @@ export function StatusBadge({ value }) {
 }
 
 export function StatCard({ label, value, icon: Icon, tone = "berry" }) {
-  const tones = { berry: "bg-berry-50 text-berry-600", sage: "bg-sage-50 text-sage-700", amber: "bg-amber-50 text-amber-700", red: "bg-red-50 text-red-600" };
+  const tones = {
+    berry: { wrap: "from-berry-100 to-berry-50", icon: "text-berry-600", bar: "bg-berry-500" },
+    sage: { wrap: "from-sage-100 to-sage-50", icon: "text-sage-700", bar: "bg-sage-500" },
+    amber: { wrap: "from-amber-100 to-amber-50", icon: "text-amber-700", bar: "bg-amber-400" },
+    red: { wrap: "from-red-100 to-red-50", icon: "text-red-600", bar: "bg-red-400" },
+  };
+  const t = tones[tone] || tones.berry;
   return (
-    <div className="card flex items-center gap-4 p-5">
-      {Icon && <span className={`rounded-lg p-3 ${tones[tone]}`}><Icon className="h-6 w-6" /></span>}
-      <div>
-        <p className="text-sm text-ink-soft">{label}</p>
-        <p className="font-display text-3xl font-semibold">{value}</p>
+    <div className="card-hover group relative overflow-hidden p-5">
+      <span className={`absolute inset-y-0 left-0 w-1 ${t.bar} opacity-0 transition-opacity group-hover:opacity-100`} />
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <p className="text-xs font-medium uppercase tracking-wider text-ink-faint">{label}</p>
+          <p className="mt-2 font-display text-3xl font-semibold leading-none">{value ?? 0}</p>
+        </div>
+        {Icon && (
+          <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${t.wrap} ${t.icon} transition-transform group-hover:-rotate-6`}>
+            <Icon className="h-5 w-5" />
+          </span>
+        )}
+      </div>
+      <div className="mt-5 h-1 w-full overflow-hidden rounded-full bg-berry-50">
+        <div className={`h-full w-1/3 rounded-full ${t.bar} opacity-60 transition-all duration-500 group-hover:w-2/3 group-hover:opacity-100`} />
       </div>
     </div>
   );
