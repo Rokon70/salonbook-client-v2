@@ -5,10 +5,10 @@ import { money } from "@/lib/utils";
 export default function ServiceCard({ service }) {
   return (
     <article className="card flex flex-col overflow-hidden">
-      <div className="aspect-[4/3] bg-berry-50">
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-berry-50">
         {service.image ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={service.image} alt={service.serviceName} loading="lazy" className="h-full w-full object-cover" />
+          <img src={service.image} alt={service.serviceName} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
         ) : (
           <div className="flex h-full items-center justify-center text-berry-300"><Scissors className="h-10 w-10" /></div>
         )}
