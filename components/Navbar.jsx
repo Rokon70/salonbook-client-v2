@@ -47,7 +47,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className={`sticky top-0 z-40 transition-all duration-300 ${scrolled ? "border-b border-berry-100/80 bg-white/85 shadow-sm backdrop-blur-xl" : "border-b border-transparent bg-cream/70 backdrop-blur"}`}>
+    <header className={`sticky top-0 z-40 border-b border-berry-100/80 transition-all duration-300 ${scrolled ? "bg-white/90 shadow-sm backdrop-blur-xl" : "bg-white/70 backdrop-blur"}`}>
       <div className="container-page flex h-[72px] items-center justify-between gap-4">
         <Link href="/" className="group flex items-center gap-2.5">
           <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-berry-600 to-berry-400 text-white shadow-soft transition-transform group-hover:-rotate-6">
